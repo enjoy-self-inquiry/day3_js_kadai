@@ -1,0 +1,54 @@
+①このset_points()とはどのようなメソッドか、これがあるとどのように便利なのかを答えなさい
+→それぞれの教科ごとに、valメソッドでvalue値を取得し配列化したものを出力するメソッド。
+→配列でひとまとめにすることで、何度も値を取得する手間を省くことができる。
+
+②このscore_indicate()とはどのようなメソッドかを答えなさい
+→変数sum,とsubjectsを定義。sum_score()メソッドの戻り値（合計点、科目数）をそれぞれに代入し、配列化。その後、sum（合計点）,subjects（科目数）を引数としたavarage_score()メソッドを呼び出している。
+
+③このsum_score()とはどのようなメソッドかを答えなさい
+→変数sumを定義。また、科目数（set_points().length）を定数subjectsに代入。科目ごとの点数をひとまとめ（合計）した値をsumに代入。Id名sum_indicateのテキストを合計点に書き換え。
+合計点と科目数を配列化したものを返す。
+
+④set_points().reduce(function(arr, content) { return arr + content; });が、どのような処理をしているか、答えなさい
+→まず、reduceは「隣り合う2つの配列要素に対して左から右へ同時に関数を適用し、単一の値にする。」メソッドである。
+　対象となる配列（今回は、set_points()）に対して、下の４つの引数を用いて関数を実行する。
+	・accumulator：配列の最初の値が入る（今回のようにinitialValueが指定されていない場合）
+	・currentValue：配列の２番目の値が入る（　同上　）
+	・currentIndex：現在処理されている要素の添え字（今回は省略）
+	・array：対象の配列（　同上　）
+
+　流れとしては、
+１）	引数arrにid名national_languageのvalue値が、引数contentにid名englishのvalue値がそれぞれ代入される。
+２）	ブロック{}内で１）を合計したものを返す処理が行われる。
+３）	引数arrには２）の値が、引数contentにはid名mathematicsのvalue値がそれぞれ代入される。
+４）	２）と３）の処理が単一の値になるまで繰り返される。
+
+⑤このavarage_score(sum, subjects)とはどのようなメソッドかを答えなさい
+→Math.round(x)は、xを四捨五入して近似の整数を返す。今回は、合計点を科目数で割った値（平均点）を四捨五入したものを変数avaに代入。Id名avarage_indicateのテキストを変数avaに書き換え。
+
+⑥if(document.getElementById("alert-indicate") !=null){ $('#alert-indicate').remove(); }がどのようなことをしているかを答えなさい
+→もし、id名alert-indicateの要素がnullでない場合、alert-indicateの要素（子孫要素含む）を削除する。
+⑦今回のコードでは、点数入力欄のどれかが変更されたら画面にその合計点と平均点が出力されます。点数入力欄のどれかが変更され、score_indicate()メソッドが起動してから、画面に合計点と平均点が出力されるまでの処理の流れを、自分の言葉で構わないので説明してください。
+→１）点数入力欄のどれかが変更され、changeイベント発火。score_indicate()メソッド起動。
+　２）sum_score(),average_score(sum,subjects)メソッド起動。（各メソッドについては③と⑤で回答済）
+それぞれのメソッドによって、id名sum-indicateとavarage_indicateのテキストが書き換えられる。
+
+⑧今回のコードでは、btn-evaluationが押されたら、画面に点数に応じたランクが出力されます。btn-evaluationが押され、get_achievement()メソッドが起動してから、画面に点数に応じたランクが出力されるまでの処理の流れを、自分の言葉で構わないので説明してください。
+→１）btn-evaluationがクリックされ、clickイベント発火。get_achievement()メソッド起動。
+　２）get_achievement()メソッドでは、まず変数定義、sum_scoreメソッドの呼び出しを行う。
+　３）if文で、合計点sumのスコアが、最高得点（subjects * 100）の８割・６割・４割・４割未満かで、それぞれランクＡ～Ｄを変数evaluationに代入。
+　４）id名evaluationのテキストをランクが代入された変数evaluationに書き換え。
+　５）変数evaluationを戻り値として返す。（後のjudgement()メソッドで活かすため、戻り値を返している。）
+
+⑨今回のコードでは、btn-judgeが押されたら、画面に点数に応じた合格不合格判定が出力されます。btn-judgeが押され、get_pass_or_failure()メソッドが起動してから、画面に合格不合格判定が出力されるまでの処理の流れを、自分の言葉で構わないので説明してください。
+→１）btn-judgeがクリックされ、clickイベント発火。get_pass_or_failure()メソッド起動。
+　２）get_pass_or_failure()メソッドでは、まず科目数と予め“合格”が代入された変数を定義。
+　３）配列化された各科目の点数が60点未満かどうかを判定し、trueの場合はその時点で“不合格”を変数に代入。不合格は確定したので、繰り返し処理から脱出（break）。
+　４）id名judgeのテキストを合否が代入された変数judgeに書き換え。
+　５）変数judgeを戻り値として返す。（後のjudgement()メソッドで活かすため、戻り値を返している。）
+
+⑩今回のコードでは、btn-declarationが押されたら、画面に点数に応じた最終判定の文字列が出力されます。btn-declarationが押され、judgement()メソッドが起動してから、画面に最終判定の文字列が出力されるまでの処理の流れを、自分の言葉で構わないので説明してください。
+→１）btn-declarationがクリックされ、clickイベント発火。judgement()メソッド起動。
+　２）judgement()メソッドでは、上記⑨と⑩のメソッドの戻り値をそれぞれ変数に代入。
+　３）id名alert-indicateに既に要素が入っている（nullでない）場合は、いったん削除。
+　４）id名declarationに、appendメソッドで（）内のhtml要素を追加し、ランクと合否を出力。
